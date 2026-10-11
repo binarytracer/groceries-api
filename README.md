@@ -1,6 +1,6 @@
 # Groceries API
 
-The backend for **Shopmate**, the Flutter groceries app in [../mobile](../mobile). It is the **first API** built for that app: a small [NestJS](https://nestjs.com) service that the app talks to for the shopping list and sign-in.
+The backend for **Shopmate**, the Flutter groceries app in [binarytracer/groceries_app](https://github.com/binarytracer/groceries_app). It is the **first API** built for that app: a small [NestJS](https://nestjs.com) service that the app talks to for the shopping list and sign-in.
 
 > **Status:** early. Items live in memory and reset on restart (an undone delete goes to the end of the list after a refetch), and the credentials are a single static user. The app is meant to move to a serverless API later, so keep the contract below stable and the mobile app only needs a new base URL.
 
@@ -11,7 +11,7 @@ The backend for **Shopmate**, the Flutter groceries app in [../mobile](../mobile
 - **Version:** `GET /version` (public) tells the mobile app which release is current, so it can ask users to update from Google Play or the App Store. It returns `latestVersion`, `minSupportedVersion` (older builds must update), `releaseNotes` (what's new in the latest version) and `storeUrls`. The version numbers and store links come from `.env`. The notes come from [release-notes.json](release-notes.json): add an entry for each release, keyed by version. When you publish a new app version, update `APP_LATEST_VERSION` and the notes, then restart the API.
 - **Static credentials for now:** `admin` / `password123`, defined in [src/auth/auth.service.ts](src/auth/auth.service.ts). Replace with a real user store before this goes anywhere public.
 
-The full contract, with a Swagger screenshot, is in [../mobile/docs/api-contract.md](../mobile/docs/api-contract.md). When the API is running, the live version is at `/docs`.
+The full contract, with a Swagger screenshot, is in [docs/api-contract.md](https://github.com/binarytracer/groceries_app/blob/main/docs/api-contract.md) in the app repo. When the API is running, the live version is at `/docs`.
 
 ## Project layout
 
@@ -55,7 +55,7 @@ Swagger UI is at `http://localhost:3000/docs`. Sign in with `POST /auth`, copy t
 
 ## Connect the mobile app
 
-Set `API_URL` in the app's env file (`mobile/env/dev.json`) and run it with `--dart-define-from-file=env/dev.json`. See the mobile README for the details.
+Set `API_URL` in the app's env file (`env/dev.json` in the app repo) and run it with `--dart-define-from-file=env/dev.json`. See the [app README](https://github.com/binarytracer/groceries_app#readme) for the details.
 
 | App runs on | `API_URL` |
 |---|---|
