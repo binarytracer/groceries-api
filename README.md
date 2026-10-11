@@ -53,6 +53,8 @@ yarn start:prod    # runs the built output in dist/
 
 Swagger UI is at `http://localhost:3000/docs`. Sign in with `POST /auth`, copy the `accessToken`, click **Authorize** and paste it to try the other routes.
 
+![Swagger UI for the Groceries API](docs/swagger.png)
+
 ## Connect the mobile app
 
 Set `API_URL` in the app's env file (`env/dev.json` in the app repo) and run it with `--dart-define-from-file=env/dev.json`. See the [app README](https://github.com/binarytracer/groceries_app#readme) for the details.
