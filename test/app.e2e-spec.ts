@@ -23,6 +23,18 @@ describe('AppController (e2e)', () => {
       .expect({ status: 'ok' });
   });
 
+  it('/version (GET) is public and returns the app release info', () => {
+    return request(app.getHttpServer())
+      .get('/version')
+      .expect(200)
+      .expect(({ body }) => {
+        expect(body.latestVersion).toMatch(/^\d+\.\d+\.\d+$/);
+        expect(body.minSupportedVersion).toMatch(/^\d+\.\d+\.\d+$/);
+        expect(Array.isArray(body.releaseNotes)).toBe(true);
+        expect(body.storeUrls).toEqual({ android: null, ios: null });
+      });
+  });
+
   afterEach(async () => {
     await app.close();
   });

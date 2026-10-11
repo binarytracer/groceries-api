@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { v4 } from 'uuid';
 
 export interface GroceryItem {
@@ -23,6 +23,12 @@ export class GroceriesService {
     return this.items;
   }
 
+  getItem(id: string): GroceryItem {
+    const item = this.items.find((i) => i.id === id);
+    if (!item) throw new NotFoundException(`Item ${id} not found`);
+    return item;
+  }
+
   createItem(body: any): GroceryItem {
     const item: GroceryItem = {
       id: v4(),
@@ -32,5 +38,28 @@ export class GroceriesService {
     };
     this.items.push(item);
     return item;
+  }
+
+  /**
+   * Replaces the item stored under [id]. Creates it when missing (an upsert),
+   * because the app restores a deleted item (Undo) by PUTting it back.
+   */
+  updateItem(id: string, body: any): GroceryItem {
+    const item: GroceryItem = {
+      id,
+      name: body.name,
+      quantity: body.quantity,
+      category: body.category,
+    };
+    const index = this.items.findIndex((i) => i.id === id);
+    if (index === -1) this.items.push(item);
+    else this.items[index] = item;
+    return item;
+  }
+
+  deleteItem(id: string): GroceryItem {
+    const index = this.items.findIndex((i) => i.id === id);
+    if (index === -1) throw new NotFoundException(`Item ${id} not found`);
+    return this.items.splice(index, 1)[0];
   }
 }

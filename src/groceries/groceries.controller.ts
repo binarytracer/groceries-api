@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { GroceriesService } from './groceries.service';
 
@@ -20,17 +28,17 @@ export class GroceriesController {
   }
 
   @Get(':id')
-  getItem(@Param('id') id: string): any {
-    return { id, name: 'Item 1', quantity: 1, category: 'Category 1' };
+  getItem(@Param('id') id: string) {
+    return this.groceries.getItem(id);
   }
 
   @Delete(':id')
-  deleteItem(@Param('id') id: string): any {
-    return { id, name: 'Item 1', quantity: 1, category: 'Category 1' };
+  deleteItem(@Param('id') id: string) {
+    return this.groceries.deleteItem(id);
   }
 
   @Put(':id')
-  updateItem(@Param('id') id: string, @Body() body: any): any {
-    return { id, name: 'Item 1', quantity: 1, category: 'Category 1' };
+  updateItem(@Param('id') id: string, @Body() body: any) {
+    return this.groceries.updateItem(id, body);
   }
 }

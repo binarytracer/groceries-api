@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
 import { envValidationSchema } from './config/env.validation';
+import { VersionModule } from './version/version.module';
 import { GroceriesModule } from './groceries/groceries.module';
 
 @Module({
@@ -12,6 +13,9 @@ import { GroceriesModule } from './groceries/groceries.module';
       validationSchema: envValidationSchema,
     }),
     AuthModule,
+    // Before GroceriesModule: its root-level `GET /:id` would otherwise match
+    // `/version` first. Moving groceries under `/groceries` would remove this.
+    VersionModule,
     GroceriesModule,
   ],
   controllers: [AppController],
